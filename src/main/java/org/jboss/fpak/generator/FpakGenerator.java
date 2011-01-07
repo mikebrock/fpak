@@ -54,6 +54,7 @@ public class FPakGenerator {
         int read;
         while ((read = inputStream.read()) != -1) {
             switch (read) {
+                case '\\':
                 case '{':
                 case '}':
                 case '@':
