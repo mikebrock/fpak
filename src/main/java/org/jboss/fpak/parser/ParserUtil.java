@@ -40,6 +40,10 @@ public abstract class ParserUtil {
         Capture:
         while ((b = stream.read()) != -1) {
             switch (b) {
+                case '\\':
+                    b = stream.read();
+                    break;
+
                 case '{':
                     ++nest;
                     break;

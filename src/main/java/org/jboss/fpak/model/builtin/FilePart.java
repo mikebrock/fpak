@@ -19,13 +19,18 @@ public class FilePart implements MultiPart {
     private String relativePath;
     private String fileName;
 
-    private CompiledTemplate template;
+    private String template;
 
     public void generate(GenerationContext ctx) throws IOException {
         String path = String.valueOf(TemplateRuntime.eval(pathTemplate, ctx.getGlobals())).trim();
 
-        relativePath = path.substring(0, path.lastIndexOf('/'));
-        fileName = path.substring(relativePath.length() + 1);
+        if (path.indexOf('/') == -1) {
+            relativePath = "";
+            fileName = path;
+        } else {
+            relativePath = path.substring(0, path.lastIndexOf('/'));
+            fileName = path.substring(relativePath.length() + 1);
+        }
 
         File targetDir = new File(ctx.getWorkingDirectory() + "/" + relativePath).getAbsoluteFile();
 
@@ -56,9 +61,15 @@ public class FilePart implements MultiPart {
 
         FileOutputStream outputStream = new FileOutputStream(targetFile);
         try {
-            TemplateRuntime.execute(template, ctx.getGlobals(), outputStream);
+            TemplateRuntime.eval(template, ctx.getGlobals(), outputStream);
             outputStream.flush();
-        } finally {
+        } catch(Exception e) {
+            System.out.println("Unable to parse: " + path + "\n---------------------");
+            System.out.println(template);
+            System.out.println("-------------------");
+            e.printStackTrace();
+        }
+        finally {
             outputStream.close();
         }
 
@@ -77,7 +88,7 @@ public class FilePart implements MultiPart {
         this.fileName = fileName;
     }
 
-    public void setTemplate(CompiledTemplate template) {
+    public void setTemplate(String template) {
         this.template = template;
     }
 }

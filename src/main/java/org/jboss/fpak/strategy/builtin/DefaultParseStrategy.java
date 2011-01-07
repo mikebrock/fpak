@@ -8,10 +8,7 @@ import org.jboss.fpak.parser.sub.FInitParser;
 import org.jboss.fpak.parser.sub.FileTemplateParser;
 import org.jboss.fpak.strategy.ParseStrategy;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * @author Mike Brock .
@@ -29,7 +26,7 @@ public class DefaultParseStrategy implements ParseStrategy {
         for (File template : ctx.getTemplates()) {
             InputStream stream = null;
             try {
-                stream = new FileInputStream(template);
+                stream = new BufferedInputStream(new FileInputStream(template));
 
                 fPakParser.parse(stream, definition);
 

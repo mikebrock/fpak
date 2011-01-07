@@ -23,9 +23,7 @@ public class FileTemplateParser implements Parser {
 
         String block = ParserUtil.captureCurlyBlock(stream);
 
-        CompiledTemplate compiledTemplate = TemplateCompiler.compileTemplate(block);
-
-        filePart.setTemplate(compiledTemplate);
+        filePart.setTemplate(block);
 
         definition.addPart(DefinitionPart.File, filePart);
     }

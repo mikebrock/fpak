@@ -23,6 +23,10 @@ public class FPakParser implements Parser {
 
         while ((read = stream.read()) != -1) {
             switch (read) {
+                case '\\':
+                    stream.read();
+                    break;
+
                 case '@':
                     String nodeType = ParserUtil.captureTo(stream, ':');
                     if (!parsers.containsKey(nodeType)) {
