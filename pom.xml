@@ -158,6 +158,13 @@
         </dependency>
     </dependencies>
 
+    <scm>
+      <connection>scm:git:git@github.com:mikebrock/fpak.git</connection>
+      <url>scm:git:git@github.com:mikebrock/fpak.git</url>
+      <developerConnection>scm:git:git@github.com:mikebrock/fpak.git</developerConnection>
+  </scm>
+
+
     <repositories>
         <repository>
             <id>jboss-snapshots-repository-group</id>
@@ -182,4 +189,22 @@
             </snapshots>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>jboss-releases-repository</id>
+            <name>JBoss Releases Repository</name>
+            <url>https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>jboss-snapshots-repository</id>
+            <name>JBoss Snapshots Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+
+    </distributionManagement>
+
 </project>
+
+
