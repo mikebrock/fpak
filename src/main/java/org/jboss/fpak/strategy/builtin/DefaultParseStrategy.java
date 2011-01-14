@@ -19,9 +19,23 @@ public class DefaultParseStrategy implements ParseStrategy {
         ctx.setParser("help", new FHelpParser());
         ctx.setParser(FPakParser.FILE_TEMPLATE_PARSER, new FileTemplateParser());
 
-
         FPakParser fPakParser = new FPakParser(ctx.getParsers());
         Definition definition = new Definition();
+
+        for (InputStream stream: ctx.getInputStreams()) {
+            try {
+                fPakParser.parse(stream, definition);
+
+            } catch (IOException e) {
+                throw new RuntimeException("unknown exception: " + e.getMessage(), e);
+            } finally {
+                try {
+                    if (stream != null) stream.close();
+                } catch (Exception e) {
+                    throw new RuntimeException("failed to close stream", e);
+                }
+            }
+        }
 
         for (File template : ctx.getTemplates()) {
             InputStream stream = null;

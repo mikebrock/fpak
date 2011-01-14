@@ -4,6 +4,7 @@ import org.jboss.fpak.parser.Parser;
 import org.jboss.fpak.strategy.RunStrategy;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -12,7 +13,9 @@ import java.util.*;
 public class GenerationContext {
     private Map<String, Object> globals = new HashMap<String, Object>();
     private File workingDirectory = new File(".").getAbsoluteFile();
+
     private List<File> templates = new ArrayList<File>();
+    private List<InputStream> inputStreams = new ArrayList<InputStream>();
 
     private EnumSet<Option> options;
     private Map<String, Parser> parsers = new HashMap<String, Parser>();
@@ -22,6 +25,7 @@ public class GenerationContext {
     private RunStrategy runStrategy;
 
     public GenerationContext() {
+        globals.put("_out", System.out);
     }
 
     public Map<String, Object> getGlobals() {
@@ -44,6 +48,10 @@ public class GenerationContext {
         templates.add(file);
     }
 
+    public void addInputStream(InputStream stream) {
+        inputStreams.add(stream);
+    }
+
     public void setOption(Option option) {
         if (options == null) {
             options = EnumSet.of(option);
@@ -64,9 +72,9 @@ public class GenerationContext {
     }
 
     public void setTemplateArgs(String[] templateArgs) {
-        this.templateArgs = templateArgs;
+        this.templateArgs = (templateArgs == null ? new String[0] : templateArgs);
 
-        globals.put("$arg", templateArgs);
+        globals.put("$arg", this.templateArgs);
     }
 
     public Map<String, Parser> getParsers() {
@@ -75,6 +83,10 @@ public class GenerationContext {
 
     public List<File> getTemplates() {
         return Collections.unmodifiableList(templates);
+    }
+
+    public List<InputStream> getInputStreams() {
+        return Collections.unmodifiableList(inputStreams);
     }
 
     public String[] getTemplateArgs() {
