@@ -11,6 +11,6 @@ public class BasicTests extends TestCase {
         Runner runner = new Runner();
 
         runner.setWorkingDirectory(System.getProperty("java.io.tmpdir"));
-        runner.run("src/test/resources/test1", "my.fun.package.Hello");
+        runner.run("src/test/resources/test1", "--name", "my.fun.package.Hello");
     }
 }

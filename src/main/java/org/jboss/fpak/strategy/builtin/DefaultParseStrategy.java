@@ -5,6 +5,7 @@ import org.jboss.fpak.model.Definition;
 import org.jboss.fpak.parser.FPakParser;
 import org.jboss.fpak.parser.sub.FHelpParser;
 import org.jboss.fpak.parser.sub.FInitParser;
+import org.jboss.fpak.parser.sub.FInputsParser;
 import org.jboss.fpak.parser.sub.FileTemplateParser;
 import org.jboss.fpak.strategy.ParseStrategy;
 
@@ -17,6 +18,8 @@ public class DefaultParseStrategy implements ParseStrategy {
     public Definition doStrategy(GenerationContext ctx) {
         ctx.setParser("init", new FInitParser());
         ctx.setParser("help", new FHelpParser());
+        ctx.setParser("inputs", new FInputsParser());
+
         ctx.setParser(FPakParser.FILE_TEMPLATE_PARSER, new FileTemplateParser());
 
         FPakParser fPakParser = new FPakParser(ctx.getParsers());

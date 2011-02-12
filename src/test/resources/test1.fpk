@@ -1,15 +1,20 @@
-@help:{
-  "Specify a class name (eg foo.bar.Class)"
+@inputs:{
+    String name : "Fully qualified class name",
+    boolean help : "Prints help"
 }
 @init:{
-  if ($arg.length == 0) {
+  if (help) {
+      System.out.println(" --name <fullyQulifiedClassName>");
+  }
+
+  if (name == null) {
      fail("You must specify a class name");
      return;
   }
 
-  package = $arg[0].substring(0, $arg[0].lastIndexOf('.'));
-  packageDir = package.replaceAll('\\.', '/');
-  classname = $arg[0].substring(package.length() + 1);
+  package = name.substring(0, name.lastIndexOf('.'));
+  packageDir = package.replaceAll('\\\\.', '/');
+  classname = name.substring(package.length() + 1);
 }
 
 ++@{packageDir}/@{classname}.java:{
