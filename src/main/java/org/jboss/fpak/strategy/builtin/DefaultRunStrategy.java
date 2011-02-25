@@ -10,7 +10,6 @@ import org.jboss.fpak.model.builtin.FilePart;
 import org.jboss.fpak.model.builtin.InitPart;
 import org.jboss.fpak.model.builtin.InputsPart;
 import org.jboss.fpak.strategy.RunStrategy;
-import org.mvel2.DataConversion;
 import org.mvel2.MVEL;
 
 import java.util.List;
@@ -23,7 +22,7 @@ import static org.mvel2.DataConversion.convert;
 public class DefaultRunStrategy implements RunStrategy {
     public void doStrategy(GenerationContext context, Definition definition) {
 
-        InputsPart inputPart = (InputsPart) definition.getSinglePart(DefinitionPart.Parameters);
+        InputsPart inputPart = (InputsPart) definition.getSinglePart(DefinitionPart.Inputs);
 
         if (inputPart != null) {
             Options option = inputPart.getOptions();
@@ -32,7 +31,6 @@ public class DefaultRunStrategy implements RunStrategy {
                 CommandLine cmd = parser.parse(option, context.getTemplateArgs());
 
                 context.getGlobals().clear();
-
 
                 for (Parm p : inputPart.getParts()) {
                     if (Boolean.class.isAssignableFrom(p.getType())) {

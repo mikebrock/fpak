@@ -1,6 +1,5 @@
 package org.jboss.fpak.parser.sub;
 
-import org.apache.commons.cli.Options;
 import org.jboss.fpak.model.Definition;
 import org.jboss.fpak.model.DefinitionPart;
 import org.jboss.fpak.model.Parm;
@@ -8,7 +7,6 @@ import org.jboss.fpak.model.builtin.InputsPart;
 import org.jboss.fpak.parser.Parser;
 import org.jboss.fpak.parser.ParserUtil;
 import org.mvel2.MVEL;
-import org.mvel2.util.ParseTools;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,7 +63,7 @@ public class FInputsParser implements Parser {
             }
         }
 
-        definition.addPart(DefinitionPart.Parameters, new InputsPart(parms));
+        definition.addPart(DefinitionPart.Inputs, new InputsPart(parms));
     }
 
 }
